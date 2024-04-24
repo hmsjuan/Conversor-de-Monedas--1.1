@@ -1,11 +1,8 @@
 package com.hmsjuan.conversordemonedas;
 
 
-
-
-
-import com.hmsjuan.conversordemonedas.herramientas.ConversorMonedas;
-import com.hmsjuan.conversordemonedas.herramientas.Monedas;
+import com.hmsjuan.conversordemonedas.herramientas.Conversor;
+import com.hmsjuan.conversordemonedas.herramientas.Currency;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,12 +12,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.DecimalFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ConversorMain {
-    private JComboBox cBoxOrigen;
-    private JComboBox cBoxDestino;
+    private JComboBox cBoxOrigen,cBoxDestino;
     private JButton btnCambiar;
     private JLabel lblResultado;
     private JList lstResultados;
@@ -28,7 +25,7 @@ public class ConversorMain {
     private JTextField textCantidad;
     private JLabel lblEstatus;
     private String iMonedaOrigen, iMonedaDestino;
-    private double resultado, valoraConvertir, valorMonedaOrigen, valorMonedaDestino;
+    private double resultado, valoraConvertir;
     ArrayList<String> historico = new ArrayList<String>();
 
 
@@ -52,9 +49,9 @@ public class ConversorMain {
     }
     public ConversorMain(){
 
-        ConversorMonedas conversorMonedas = new ConversorMonedas("DOP");
+        Conversor conversor = new Conversor("DOP");
         try {
-            conversorMonedas.obtenerTasasDeCambio();
+            conversor.obtenerTasasDeCambio();
         } catch (IOException e) {
             mostrarMensaje(lblEstatus,"Error al obtener las tasas de cambio", Color.red );
 
@@ -74,7 +71,7 @@ public class ConversorMain {
                 String   valorTemporal = textCantidad.getText();
               if (isNumeric(valorTemporal)){
                   valoraConvertir = Double.parseDouble(valorTemporal);
-                  resultado = conversorMonedas.convertir(iMonedaOrigen, iMonedaDestino, valoraConvertir);
+                  resultado = conversor.convertir(iMonedaOrigen, iMonedaDestino, valoraConvertir);
                   DecimalFormat df = new DecimalFormat("#.00");
 
 
@@ -107,9 +104,12 @@ public class ConversorMain {
     }
 
     public void llenarComboBox(JComboBox comboBox){
-        Monedas monedas = new Monedas();
-        monedas.llenarMonedas();
-        for (Map.Entry entry: monedas.listaMonedas.entrySet() ){
+//Monedas monedas = new Monedas();
+        Currency currency = new Currency();
+        currency.llenarMonedas();
+
+       // monedas.llenarMonedas();
+        for (Map.Entry entry: currency.listaMonedas.entrySet() ){
             Object items = entry.getKey();
             Object nombres = entry.getValue();
 
