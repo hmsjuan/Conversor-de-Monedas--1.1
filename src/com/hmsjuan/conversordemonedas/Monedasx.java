@@ -1,4 +1,4 @@
-package com.hmsjuan.conversordemonedas.herramientas;
+package com.hmsjuan.conversordemonedas;
 
 import java.util.HashMap;
 
