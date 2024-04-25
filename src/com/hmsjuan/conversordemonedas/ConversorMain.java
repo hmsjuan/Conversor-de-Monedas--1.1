@@ -72,7 +72,7 @@ public class ConversorMain {
               if (isNumeric(valorTemporal)){
                   valoraConvertir = Double.parseDouble(valorTemporal);
                   resultado = conversor.convertir(iMonedaOrigen, iMonedaDestino, valoraConvertir);
-                  DecimalFormat df = new DecimalFormat("#.00");
+                  DecimalFormat df = new DecimalFormat("###,###,###.00");
 
 
                   String tResuldato = df.format(valoraConvertir)+" "+cBoxOrigen.getSelectedItem()+" equivalen a " +df.format(resultado)
